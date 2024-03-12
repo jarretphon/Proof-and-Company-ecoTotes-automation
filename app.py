@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-from streamlit_option_menu import option_menu
 from messages import app_instructions, message_body, message_2
 from data import mass_mail
 
@@ -8,12 +7,12 @@ st.set_page_config(page_title="EcoTotes Chaser")
 
 st.title("Proof and Company's automated ecoTotes Chaser")
 
-selected = option_menu(menu_title=None, options=["Home", "Send Emails"], orientation="horizontal")
+home, email = st.tabs(["Home", "Send Emails"])
 
-if selected == "Home":
+with home:
     st.write(app_instructions())
 
-elif selected == "Send Emails":
+with email:
 
     file = st.file_uploader("Upload your Excel file here", type="xlsx")
     
