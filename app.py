@@ -55,5 +55,8 @@ elif selected == "Send Emails":
                 master_df.to_excel(writer, sheet_name="Mastersheet", index=False)
                 email_df.to_excel(writer, sheet_name="Branch with Emails", index=False)
                 recording_df.to_excel(writer, sheet_name="Recording", startrow=0, index=False)
-                
-            st.download_button(label="Download updated excel sheet", data=f"updated.xlsx", file_name=f"{file.name.split(".")[0]}_updated.xlsx", mime="application/vnd.ms-excel")
+            
+            old_file_name = file.name
+            new_file_name = old_file_name.split(".")[0]
+            
+            st.download_button(label="Download updated excel sheet", data=f"updated.xlsx", file_name=f"{new_file_name}_updated.xlsx", mime="application/vnd.ms-excel")
