@@ -23,8 +23,8 @@ file_name = "ecoTotes_QR.png"
 load_dotenv(envdir)
 
 # get the environment variables
-sender_email = os.getenv("email") #st.secrets["email"] 
-password = os.getenv("password") #st.secrets["password"] 
+sender_email = st.secrets["email"] #os.getenv("email")
+password =  st.secrets["password"] #os.getenv("password")
 
 @func_set_timeout(5)
 def send_email(subject, receipients, message):
