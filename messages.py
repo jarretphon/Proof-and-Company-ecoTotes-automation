@@ -148,29 +148,31 @@ def app_instructions():
     return f"""
         *Empower your communication effortlessly with automation. This intuitive platform streamlines the process of sending email reminders, ensuring a seamless experience for tracking.*
 
-        ## Get Started
+        ### Get Started:
 
-        ### 1. Upload Excel File:
-        - Begin by effortlessly uploading your Excel file through the designated file uploader.
-        - The Excel file should comprise three essential sheets: Mastersheet, Branch with Emails, and Recording.
+        #### 1. Upload Excel File:
+        - Upload your Excel file containing Mastersheet, Branch with Emails, and Recording sheets.
+        - Ensure all sheets and columns are accurately named and included for seamless operation.
 
-        ### 2. **Mastersheet Requirements:**
-        - Elevate your data integrity by confirming the inclusion of these four critical columns in your Mastersheet: Branch, Description, Qty, and SerialNumber.
-        - Note the spelling of the columns' names and case-senstivity.
-        
-        ### 3. **Select Email Type:**
-        - Tailor your communication strategy by selecting the type of email you wish to send – whether it's the impactful first email chaser or to follow-up with the second email chaser.
+        #### 2. **Mastersheet Requirements:**
+        - Confirm the presence and accuracy of essential columns: Branch, Description, Qty, and SerialNumber.
+        - Any discrepancies may affect the application's functionality.
 
-        ### 4. **Input Credentials:**
-        - Securely authenticate and enable the sending of emails by entering your email username and password into the designated fields.
+        #### 3. **Select Email Type:**
+        - Choose between 1st Email Chaser or 2nd Email Chaser to tailor your communication strategy.
 
-        ### 5. **Preview Email (Optional):**
-        - Preview the refined email content before initiating the sending process.
-        - Click the "Preview Email" button to review the meticulously crafted email structure and contents.
+        #### 4. **Send Emails:**
+        - Initiate the email sending process with a single click.
+        - Relax as the application automates delivery, ensuring timely communication with recipients.
+        - Note: The application will attempt up to five retries for failed deliveries. Any undelivered emails due to invalid addresses or server disconnection will be recorded in the recording sheet.
 
-        ### 6. **Send Mail:**
-        - Automate the mail sending process by clicking the "Send Mail" button.
-        - Sit back as the application seamlessly processes and update your information, ensuring timely and effective delivery to recipients based on your Mastersheet data.
+        #### 5. **Feedback and Tracking:**
+        - Monitor email delivery status and potential errors via the Recording sheet in your Excel file.
+        - Regularly review the Recording sheet to address any issues promptly and maintain effective communication.
 
-        *Thank you for choosing the Email Sender App. Should you encounter any inquiries or require support, kindly refer to our comprehensive documentation or reach out to our dedicated support team for assistance.*
-"""
+        #### Need Assistance?
+
+        For any inquiries or assistance regarding the EcoTotes Chaser application, please don't hesitate to reach out to our dedicated support team.
+
+        Thank you for choosing EcoTotes Chaser by Proof and Company. We are committed to optimizing your email communication experience and enhancing your productivity.
+    """

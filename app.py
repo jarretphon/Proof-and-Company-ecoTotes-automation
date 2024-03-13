@@ -15,7 +15,11 @@ if selected == "Home":
 
 elif selected == "Send Emails":
 
-    file = st.file_uploader("Upload your Excel file here", type="xlsx")
+    try:
+        file = st.file_uploader("Upload your Excel file here", type="xlsx")
+    except ValueError:
+        st.warning("Please ensure that all required sheets and columns are included in your file.")
+        st.warning("Note: Sheet and column names are case-sensitive")
     
     if file is not None:
         sheet_names = ["Mastersheet", "Branch with Emails", "Recording"]
