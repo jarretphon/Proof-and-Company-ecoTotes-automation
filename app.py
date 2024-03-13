@@ -50,3 +50,10 @@ elif selected == "Send Emails":
                 params.insert(5, message_2)
                 
             mass_mail(*params)
+
+            with pd.ExcelWriter("updated.xlsx", engine="openpyxl", mode="a", if_sheet_exists="overlay", date_format="DD-MM") as writer:
+                master_df.to_excel(writer, sheet_name="Mastersheet", index=False)
+                email_df.to_excel(writer, sheet_name="Branch with Emails", index=False)
+                recording_df.to_excel(writer, sheet_name="Recording", startrow=0, index=False)
+                
+            st.download_button(label="Download updated excel sheet", data=f"updated.xlsx", file_name=f"{file.name.split(".")[0]}_updated.xlsx", mime="application/vnd.ms-excel")

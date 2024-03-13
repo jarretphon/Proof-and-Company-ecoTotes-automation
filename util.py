@@ -41,5 +41,5 @@ def record_data(branch, data_file_path, recording_df, recorded_by):
     row_index = recording_df.index[recording_df["Branch"] == branch].to_list()
     recording_df.at[row_index[0], "1st Email Chaser"] = pd.to_datetime(datetime.now(), format="%d-%m-%Y")
     recording_df.at[row_index[0], "Sent By"] = str(recorded_by)
-    with pd.ExcelWriter(data_file_path.name, engine="openpyxl", mode="a", if_sheet_exists="overlay", date_format="DD-MM") as writer:
-        recording_df.to_excel(writer, sheet_name="Recording", startrow=0, index=False)
+    #with pd.ExcelWriter(data_file_path.name, engine="openpyxl", mode="a", if_sheet_exists="overlay", date_format="DD-MM") as writer:
+    #    recording_df.to_excel(writer, sheet_name="Recording", startrow=0, index=False)
