@@ -30,9 +30,11 @@ def mass_mail(master_df, email_df, recording_df, file, branch_names_mastersheet,
         try:
             send_email("Proof & Company Pte Ltd - Overdue ecoTOTES", receipients, message(table_rows))
             print(f"sent to {branch} succesfully")  
-            record_data(branch, file, recording_df, recorded_by)
             branches_email_success.append(branch) 
-    
+            unsuccessful_emails = [branch for branch in branch_names_mastersheet if branch not in branches_email_success]
+            print(f"Unsuccessful: {unsuccessful_emails}")
+            record_data(branch, file, recording_df, recorded_by)
+            
         except SMTPException as e:
             print(e)
             continue
@@ -44,9 +46,6 @@ def mass_mail(master_df, email_df, recording_df, file, branch_names_mastersheet,
         except FunctionTimedOut:
             print(f"Timed out for {branch}")
             continue
-    
-    unsuccessful_emails = [branch for branch in branch_names_mastersheet if branch not in branches_email_success]
-    print(f"Unsuccessful: {unsuccessful_emails}")
     
     if len(unsuccessful_emails) > 0:
         num_retry += 1
