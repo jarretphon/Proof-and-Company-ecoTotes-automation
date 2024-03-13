@@ -10,6 +10,7 @@ from pathlib import Path
 from dotenv import load_dotenv
 from func_timeout import func_set_timeout
 from messages import message_body
+import streamlit as st
 
 PORT = 587
 EMAIL_SERVER = "smtp-mail.outlook.com"
@@ -22,8 +23,8 @@ file_name = "ecoTotes_QR.png"
 load_dotenv(envdir)
 
 # get the environment variables
-sender_email = os.getenv("email")
-password = os.getenv("password")
+sender_email = st.secrets["email"] #os.getenv("email")
+password = st.secrets["password"] #os.getenv("password")
 
 @func_set_timeout(5)
 def send_email(subject, receipients, message):
