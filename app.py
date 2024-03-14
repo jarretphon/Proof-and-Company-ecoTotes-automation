@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 from streamlit_option_menu import option_menu
-from messages import app_instructions, message_body, message_2
+from messages import app_instructions, message_body, message_2, message_body_text, message_2_text
 from data import mass_mail
 
 st.set_page_config(page_title="EcoTotes Chaser")   
@@ -15,11 +15,7 @@ if selected == "Home":
 
 elif selected == "Send Emails":
 
-    try:
-        file = st.file_uploader("Upload your Excel file here", type="xlsx")
-    except ValueError:
-        st.warning("Please ensure that all required sheets and columns are included in your file.")
-        st.warning("Note: Sheet and column names are case-sensitive")
+    file = st.file_uploader("Upload your Excel file here", type="xlsx")
     
     if file is not None:
         sheet_names = ["Mastersheet", "Branch with Emails", "Recording"]
@@ -28,14 +24,19 @@ elif selected == "Send Emails":
 
         email_type = st.selectbox("Email Type", options=["1st Email Chaser", "2nd Email Chaser"], placeholder="Choose your email type")
         
+        if email_type == "1st Email Chaser":
+            with st.container(height=475):
+                st.write(message_body_text, unsafe_allow_html=True)
+        elif email_type == "2nd Email Chaser":
+            with st.container(height=475):
+                st.write(message_2_text, unsafe_allow_html=True)
+        
         with st.form("Credentials", clear_on_submit=True):
+            st.write("Recorded by:")
             col1, col2 = st.columns(2)
             first_name = col1.text_input("First name", placeholder="John")
             last_name = col2.text_input("Last name", placeholder="Doe")
-        
-            if first_name == "" or last_name == "":
-                st.warning("Ensure all the above fields are filled up")
-                
+                    
             submit_btn = st.form_submit_button("Send Mails")
 
         if submit_btn:
@@ -51,12 +52,13 @@ elif selected == "Send Emails":
                 
             mass_mail(*params)
 
-            with pd.ExcelWriter("updated.xlsx", engine="openpyxl", mode="a", if_sheet_exists="overlay", date_format="DD-MM") as writer:
-                master_df.to_excel(writer, sheet_name="Mastersheet", index=False)
+            with pd.ExcelWriter("updated.xlsx", engine="xlsxwriter", date_format="DD-MM") as writer:
+                master_df.to_excel(writer, sheet_name="Mastersheet", index=False,)
                 email_df.to_excel(writer, sheet_name="Branch with Emails", index=False)
                 recording_df.to_excel(writer, sheet_name="Recording", startrow=0, index=False)
-            
+
             old_file_name = file.name
             new_file_name = old_file_name.split(".")[0]
-            
-            st.download_button(label="Download updated excel sheet", data=f"updated.xlsx", file_name=f"{new_file_name}_updated.xlsx", mime="application/vnd.ms-excel")
+
+            with open("updated.xlsx", "rb") as updated_file:
+                st.download_button(label="Download updated excel sheet", data=updated_file, file_name=f"{new_file_name}_updated.xlsx", mime="application/vnd.ms-excel")
