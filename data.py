@@ -1,7 +1,8 @@
+from cgitb import text
 from smtplib import SMTPException
 import pandas as pd
 import time
-import os
+import streamlit as st
 from pathlib import Path
 from datetime import datetime
 from func_timeout import FunctionTimedOut
@@ -10,7 +11,7 @@ from automation import send_email
 from util import get_table_content, get_recepients, record_data
 
 num_retry = 0
-def mass_mail(master_df, email_df, recording_df, file, branch_names_mastersheet, message, recorded_by):
+def mass_mail(master_df, email_df, recording_df, file, branch_names_mastersheet, message, recorded_by, sending_prog):
     global num_retry
     if num_retry >= 5:
         return
@@ -18,6 +19,7 @@ def mass_mail(master_df, email_df, recording_df, file, branch_names_mastersheet,
     branches_email_success = []
     for branch in branch_names_mastersheet:
         time.sleep(3)
+        
         branch_info = master_df[master_df["Branch"] == branch]
         
         table_rows = get_table_content(branch_info)
@@ -31,6 +33,7 @@ def mass_mail(master_df, email_df, recording_df, file, branch_names_mastersheet,
             send_email("Proof & Company Pte Ltd - Overdue ecoTOTES", receipients, message(table_rows))
             print(f"sent to {branch} succesfully")  
             branches_email_success.append(branch) 
+            sending_prog.progress(value=len(branches_email_success)/len(branch_names_mastersheet), text="Sending...")
             record_data(branch, file, recording_df, recorded_by)
      
         except SMTPException as e:
@@ -49,9 +52,8 @@ def mass_mail(master_df, email_df, recording_df, file, branch_names_mastersheet,
     print(f"Unsuccessful: {unsuccessful_emails}")
     if len(unsuccessful_emails) > 0:
         num_retry += 1
-        mass_mail(master_df, email_df, recording_df, file, unsuccessful_emails, message, recorded_by)
+        mass_mail(master_df, email_df, recording_df, file, unsuccessful_emails, message, recorded_by, sending_prog)
         
-        
-    
+    return unsuccessful_emails
 
     
