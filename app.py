@@ -20,7 +20,9 @@ elif selected == "Send Emails":
     if file is not None:
         sheet_names = ["Mastersheet", "Branch with Emails", "Recording"]
         master_df, email_df, recording_df = [pd.read_excel(file, sheet_name = sheet) for sheet in sheet_names]
-        branch_names_mastersheet = master_df["Branch"].unique()
+        
+        unaccounted_branches = master_df[master_df["Accounted"].isna()]
+        branch_names_mastersheet = unaccounted_branches["Branch"].unique()
 
         email_type = st.selectbox("Email Type", options=["1st Email Chaser", "2nd Email Chaser"], placeholder="Choose your email type")
         

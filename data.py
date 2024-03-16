@@ -19,7 +19,10 @@ def mass_mail(master_df, email_df, recording_df, file, branch_names_mastersheet,
     for branch in branch_names_mastersheet:
         time.sleep(3)
         
-        branch_info = master_df[master_df["Branch"] == branch]
+        branch_info = master_df[(master_df["Branch"] == branch) & (master_df["Accounted"].isna())]
+        
+        if branch_info.empty:
+            continue
         
         table_rows = get_table_content(branch_info)
         receipients = get_recepients(branch, email_df)
