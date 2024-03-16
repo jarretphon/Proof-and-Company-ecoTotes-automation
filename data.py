@@ -13,10 +13,9 @@ from util import get_table_content, get_recepients, record_data
 num_retry = 0
 def mass_mail(master_df, email_df, recording_df, file, branch_names_mastersheet, message, recorded_by, sending_prog):
     global num_retry
-    if num_retry >= 5:
-        return
     
     branches_email_success = []
+    unsuccessful_emails = []
     for branch in branch_names_mastersheet:
         time.sleep(3)
         
@@ -50,10 +49,13 @@ def mass_mail(master_df, email_df, recording_df, file, branch_names_mastersheet,
     
     unsuccessful_emails = [branch for branch in branch_names_mastersheet if branch not in branches_email_success]
     print(f"Unsuccessful: {unsuccessful_emails}")
+    
+    if num_retry >= 4:
+        return unsuccessful_emails
+    
     if len(unsuccessful_emails) > 0:
         num_retry += 1
-        mass_mail(master_df, email_df, recording_df, file, unsuccessful_emails, message, recorded_by, sending_prog)
-        
-    return unsuccessful_emails
+        return mass_mail(master_df, email_df, recording_df, file, unsuccessful_emails, message, recorded_by, sending_prog) 
+    
 
     
