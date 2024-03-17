@@ -4,10 +4,14 @@
 
 This project improves the email reminder process for Proof & Company, a local alcoholic beverage supplier, by introducing automation and enhancing efficiency. The company's operations involve supplying beverages to bars and restaurants in eco-friendly crates, which are later collected for recycling. Before sending invoices, Proof & Company sends out two email reminders weekly. These emails traditionally required manual input of data from an auto-generated excel sheet, a time-consuming and error-prone process.
 
-### Challenges
+<br>
+
+## Challenges
 
 - **Manual Data Entry:** Data for the email content, including tables and attachments, was previously inputted manually, leading to inefficiencies and potential errors.
 - **Repetitive Quarterly Process:** As the company repeats this process quarterly, the manual effort invested in each cycle became a significant overhead.
+
+<br>
 
 ## Solution
 
@@ -23,6 +27,8 @@ The project addresses these challenges through a two-fold solution:
     - **Func_timeout Library:**
       Incorporates the Func_timeout library to add timeouts to function calls, enhancing reliability, and gracefully handling delays or errors. Additionally, a delay of 3 seconds between each email sending is implemented to ensure compliance with Microsoft's rate limit while optimising delivery of automated emails.
 
+<br>
+    
 2. **Streamlit Web Application**
     - **User-Friendly Interface:**
       Provides a simple and intuitive interface using Streamlit, catering to users with varying levels of technical expertise.
@@ -36,11 +42,19 @@ The project addresses these challenges through a two-fold solution:
     - **XlsxWriter Library:**
       Utilised XlsxWriter to update and write data to Excel sheets, ensuring seamless integration with the existing Excel-based workflow of Proof & Company. The Excel file is made available for users to download for tracking purposes.
 
+<br>
 
-### Business Impact
+## Visual
 
-- **Efficiency Gains:** The automation of the email reminder process has significantly reduced the time and effort required, resulting in improved overall efficiency.
-- **Error Reduction:** Eliminating manual data entry minimizes the risk of errors in email content, contributing to a more reliable communication process.
+To maintain the security and privacy of Proof & Company's resources, access to view the application is not provided. However, for demonstration purposes, visual representations of the application will be provided in the form of GIFs and images. Thank you for your understanding.
+
+
+<br>
+
+## Business Impact
+
 - **Resource Savings:** With the streamlined automation, Proof & Company estimates saving the equivalent of two teams' worth of man-hours per quarter.
+- **Efficiency Gains:** The automation of the email reminder process has reduced the time and manual effort required by up to 90%, resulting in improved overall efficiency.
+- **Error Reduction:** Eliminating manual data entry minimizes the risk of errors in email content, contributing to a more reliable communication process.
 - **Scalability:** The automated script and web application are designed to handle the repetitive quarterly process with ease, providing scalability for future business needs.
 
