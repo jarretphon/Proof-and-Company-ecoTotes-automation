@@ -9,21 +9,33 @@ This project improves the email reminder process for Proof & Company, a local al
 - **Manual Data Entry:** Data for the email content, including tables and attachments, was previously inputted manually, leading to inefficiencies and potential errors.
 - **Repetitive Quarterly Process:** As the company repeats this process quarterly, the manual effort invested in each cycle became a significant overhead.
 
-### Solution
+## Solution
 
 The project addresses these challenges through a two-fold solution:
 
-1. **Email Automation Script:**
-   - **Data Processing:** Utilizes pandas to seamlessly read data from an Excel file into a dataframe.
-   - **Dynamic Table Generation:** Dynamically generates data for the email table, eliminating the need for manual input.
-   - **Automated Email Sending:** Utilizes Python's email library to automate the process of sending reminder emails.
-   - **Enhanced Email Content:** Includes a standard template, inline image, and attachment in each email, providing comprehensive information to recipients.
+1. **Email Automation Script with Python as Core programming language**
+    - **Data Processing with Pandas:**
+      Utilizes Pandas to seamlessly read data from an Excel file into a dataframe and dynamically generate data for the email table, eliminating the need for manual input. This dynamic approach ensures that email content is always up-to-date and accurate.
+    
+    - **Automated Email Sending:**
+      Leveraged Python email library's MIME capabilities and SMTP library to automate the process of sending reminder emails programmatically. Each email is enriched with a standard template, inline image, and attachment, providing comprehensive information to recipients.
+    
+    - **Func_timeout Library:**
+      Incorporates the Func_timeout library to add timeouts to function calls, enhancing reliability, and gracefully handling delays or errors. Additionally, a delay of 3 seconds between each email sending is implemented to ensure compliance with Microsoft's rate limit while optimising delivery of automated emails.
 
-2. **Streamlit Web Application:**
-   - **User-Friendly Interface:** Provides a simple and intuitive interface using Streamlit, catering to users with varying levels of technical expertise.
-   - **Excel File Upload:** Allows users to upload Excel files, streamlining the data input process.
-   - **Preview Section:** Offers a preview of the email content before sending, ensuring accuracy.
-   - **Secure Email Credentials Input:** Includes an authentication service to ensure security and a secure form for users to input email credentials.
+2. **Streamlit Web Application**
+    - **User-Friendly Interface:**
+      Provides a simple and intuitive interface using Streamlit, catering to users with varying levels of technical expertise.
+    
+    - **Excel File Upload:**
+      Enables users to upload Excel files, streamlining the data input process.
+    
+    - **Content Selector and Preview Section:**
+      Offers a select box for users to easily switch bewtween email templates for different stages of ecoTote collection process. A preview of the email content will be provided before sending, ensuring accuracy.
+    
+    - **XlsxWriter Library:**
+      Utilised XlsxWriter to update and write data to Excel sheets, ensuring seamless integration with the existing Excel-based workflow of Proof & Company. The Excel file is made available for users to download for tracking purposes.
+
 
 ### Business Impact
 
