@@ -11,7 +11,7 @@ from automation import send_email
 from util import get_table_content, get_recepients, record_data
 
 num_retry = 0
-def mass_mail(master_df, email_df, recording_df, file, branch_names_mastersheet, message, recorded_by, sending_prog):
+def mass_mail(master_df, email_df, recording_df, email_type, branch_names_mastersheet, message, recorded_by, sending_prog):
     global num_retry
     
     branches_email_success = []
@@ -36,7 +36,7 @@ def mass_mail(master_df, email_df, recording_df, file, branch_names_mastersheet,
             print(f"sent to {branch} succesfully")  
             branches_email_success.append(branch) 
             sending_prog.progress(value=len(branches_email_success)/len(branch_names_mastersheet), text="Sending...")
-            record_data(branch, file, recording_df, recorded_by)
+            record_data(branch, email_type, recording_df, recorded_by)
      
         except SMTPException as e:
             print(e)
@@ -58,7 +58,7 @@ def mass_mail(master_df, email_df, recording_df, file, branch_names_mastersheet,
     
     if len(unsuccessful_emails) > 0:
         num_retry += 1
-        return mass_mail(master_df, email_df, recording_df, file, unsuccessful_emails, message, recorded_by, sending_prog) 
+        return mass_mail(master_df, email_df, recording_df, email_type, unsuccessful_emails, message, recorded_by, sending_prog) 
     
 
     

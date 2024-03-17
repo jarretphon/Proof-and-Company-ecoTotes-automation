@@ -36,10 +36,13 @@ def get_recepients(branch, email_df):
     return receipients    
 
 
-def record_data(branch, data_file_path, recording_df, recorded_by):
+def record_data(branch, email_type, recording_df, recorded_by):
 # update excel sheet with timestamp of when email was sent
     row_index = recording_df.index[recording_df["Branch"] == branch].to_list()
-    recording_df.at[row_index[0], "1st Email Chaser"] = pd.to_datetime(datetime.now(), format="%d-%m-%Y")
-    recording_df.at[row_index[0], "Sent By"] = str(recorded_by)
-    #with pd.ExcelWriter(data_file_path.name, engine="openpyxl", mode="a", if_sheet_exists="overlay", date_format="DD-MM") as writer:
-    #    recording_df.to_excel(writer, sheet_name="Recording", startrow=0, index=False)
+    recording_df.at[row_index[0], email_type] = pd.to_datetime(datetime.now(), format="%d-%m-%Y")
+    
+    if email_type == "2nd Email Chaser":
+        recording_df.at[row_index[0], recording_df.columns[recording_df.columns.get_loc("Sent By")+2]] = str(recorded_by)
+    else:
+        recording_df.at[row_index[0], "Sent By"] = str(recorded_by)
+    

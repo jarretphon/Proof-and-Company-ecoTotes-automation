@@ -43,7 +43,7 @@ elif selected == "Send Emails":
         if submit_btn:
             recorded_by = f"{first_name} {last_name}"
             sending_prog = st.progress(value=0, text="Sending...")
-            params=[master_df, email_df, recording_df, file, branch_names_mastersheet, recorded_by, sending_prog] 
+            params=[master_df, email_df, recording_df, email_type, branch_names_mastersheet, recorded_by, sending_prog] 
             
             if email_type == "1st Email Chaser":
                 params.insert(5, message_body)
