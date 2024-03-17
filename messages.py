@@ -195,7 +195,7 @@ def app_instructions():
         - Ensure all sheets and columns are accurately named and included for seamless operation.
 
         #### 2. **Mastersheet Requirements:**
-        - Confirm the presence and accuracy of essential columns: Branch, Description, Qty, and SerialNumber.
+        - Confirm the presence and accuracy of essential columns: Branch, Description, Qty, SerialNumber and Accounted.
         - Any discrepancies may affect the application's functionality.
 
         #### 3. **Select Email Type:**
@@ -204,11 +204,11 @@ def app_instructions():
         #### 4. **Send Emails:**
         - Initiate the email sending process with a single click.
         - Relax as the application automates delivery, ensuring timely communication with recipients.
-        - Note: The application will attempt up to five retries for failed deliveries. Any undelivered emails due to invalid addresses or server disconnection will be recorded in the recording sheet.
+        - Please note that due to Microsoft Outlook's rate-limiting feature, the automated sending of 200 emails may take approximately 15-20 minutes. Our application is optimized to operate just below Microsoft's rate limit to ensure smooth functionality. We appreciate your patience during this process.
 
-        #### 5. **Feedback and Tracking:**
-        - Monitor email delivery status and potential errors via the Recording sheet in your Excel file.
-        - Regularly review the Recording sheet to address any issues promptly and maintain effective communication.
+        #### 5. **Tracking:**
+        - Download the updated Excel file and monitor email delivery status and potential errors via the Recording sheet.
+        - Note: The application will attempt up to five retries for failed deliveries. Any undelivered emails due to invalid addresses or server disconnection will be recorded in the recording sheet.
 
         #### Need Assistance?
 
