@@ -23,17 +23,17 @@ file_name = "ecoTotes_QR.png"
 load_dotenv(envdir)
 
 # get the environment variables
-sender_email = st.secrets["email"] 
+sender_email = st.secrets["email"]
 password = st.secrets["password"]
 
 @func_set_timeout(5)
-def send_email(subject, receipients, message):
+def send_email(subject, receipients, message, branch_name):
     """Unlike some other classes where you can access attributes directly (e.g., obj.attribute), 
     EmailMessage relies on the dictionary interface for header access.
     EmailMessage does not have a direct Subject attribute that you can access with dot notation."""
     msg = MIMEMultipart("alternative")
     msg["Subject"] = subject
-    msg["From"] = formataddr(("Proof & Company", f"{sender_email}"))
+    msg["From"] = formataddr((f"Proof & Company ({branch_name})", f"{sender_email}"))
     msg["To"] = ", ".join(receipients)
     
     body = MIMEText(message, "html")
@@ -63,5 +63,6 @@ if __name__ == "__main__":
     send_email(
         subject="Testing",
         receipients=["yiyiv36139@aersm.com"],
-        message = message_body("table")
+        message = message_body("table"),
+        branch_name = "ZIGGY BAR"
     )

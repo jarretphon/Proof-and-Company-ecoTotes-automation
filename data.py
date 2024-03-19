@@ -32,7 +32,7 @@ def mass_mail(master_df, email_df, recording_df, email_type, branch_names_master
         print(f"Sending email to {branch}")
         
         try:
-            send_email("Proof & Company Pte Ltd - Overdue ecoTOTES", receipients, message(table_rows))
+            send_email("Proof & Company Pte Ltd - Overdue ecoTOTES", receipients, message(table_rows), branch)
             print(f"sent to {branch} succesfully")  
             branches_email_success.append(branch) 
             sending_prog.progress(value=len(branches_email_success)/len(branch_names_mastersheet), text="Sending...")
