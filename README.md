@@ -55,9 +55,9 @@ The project leverages the following technologies:
 
 To maintain the security and privacy of Proof & Company's resources, access to view the application is not provided. However, for demonstration purposes, visual representations of the application will be provided in the form of GIFs and images.
 
-![interface](./demo/interface.gif)
-![usage](./demo/usage.gif)
-![result](./demo/result.gif)
+![interface](demo/interface.gif)
+![usage](demo/usage.mp4)
+![result](demo/result.mp4)
 
 ## Business Impact
 
