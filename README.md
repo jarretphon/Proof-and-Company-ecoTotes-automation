@@ -55,9 +55,24 @@ The project leverages the following technologies:
 
 To maintain the security and privacy of Proof & Company's resources, access to view the application is not provided. However, for demonstration purposes, visual representations of the application will be provided in the form of GIFs and images.
 
+### 1. General Interface View
 ![interface](demo/interface.gif)
-[usage](demo/usage.mp4)
-[result](demo/result.mp4)
+This GIF illustrates the main interface of our application, where a select menu allows users to toggle between the app instructions and the core functionality.
+
+### 2. Previewing Email Templates
+![preview](demo/preview.gif)
+This GIF demonstrates the process of selecting an email template from the dropdown menu and previewing its content before sending.
+
+### 3. Sending Email Process
+![send mail](demo/send_mail.gif)
+As users initiate the email sending process, a loading indicator provides visual feedback, ensuring transparency and reassures the user that his action is being acknowledged and progressed.
+
+![failure](demo/failure.PNG)
+In the event of email delivery failure, users are promptly informed of potential causes, such as invalid email addresses or server connectivity issues. A detailed list of unsuccessful branches is provided to facilitate resolution.
+
+### 4. Successful Email Sent
+![result](demo/result.gif)
+This GIF showcases the successful delivery of an email, demonstrating the reliability and effectiveness of the application.
 
 ## Business Impact
 
