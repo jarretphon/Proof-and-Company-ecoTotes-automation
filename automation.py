@@ -32,8 +32,8 @@ def send_email(subject, receipients, message, branch_name):
     EmailMessage relies on the dictionary interface for header access.
     EmailMessage does not have a direct Subject attribute that you can access with dot notation."""
     msg = MIMEMultipart("alternative")
-    msg["Subject"] = subject
-    msg["From"] = formataddr((f"Proof & Company ({branch_name})", f"{sender_email}"))
+    msg["Subject"] = f"{subject} ({branch_name})"
+    msg["From"] = formataddr((f"Proof & Company", f"{sender_email}"))
     msg["To"] = ", ".join(receipients)
     
     body = MIMEText(message, "html")
@@ -62,7 +62,7 @@ def send_email(subject, receipients, message, branch_name):
 if __name__ == "__main__":
     send_email(
         subject="Testing",
-        receipients=["yiyiv36139@aersm.com"],
+        receipients=["jadev41272@ikumaru.com"],
         message = message_body("table"),
         branch_name = "ZIGGY BAR"
     )
