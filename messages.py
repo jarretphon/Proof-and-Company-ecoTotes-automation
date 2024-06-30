@@ -102,31 +102,6 @@ def message_body(table_rows):
     </html>    
 """
 
-message_body_text = """
-    Hello Team, \n
-    Thank you for your continued support in your ecoSPIRITS Program!\n
-    To ensure a steady turnover of ecoTOTES, we have implemented a 3 month Flagging System for the return of all empty ecoTOTES. Our ecoTOTES are a valuable commodity and their re-use is central to the success of our sustainable distribution program. We appreciate your help in our efforts in recouping them.\n
-    The following below is a report of all the ecoTOTES at your venue that have been with you for 3 months or more.\n
-    Please do account for these totes and get back to us confirming either they are:
-
-    - Still in use
-    - Empty, ready for collection
-    - Lost
-    
-    ~ Table Content goes here ~
-
-    Do kindly send us a brief reply to let us know as well if the above ecoTOTES have been accounted for. We aim to send these reminders out every three months.\n
-    In addition, please reach out once there are empty ecoTOTES to be collected and we will facilitate the collection accordingly.\n
-    For your reference, here are some images of the ecoTOTES and where you can find the serial numbers on the assets:\n
-    Note: \n
-    We'll also follow up on this email in a week's time to check on the status should we not hear back from you by then. \n
-    Thereafter will be another grace period of two weeks to confirm the status of the mentioned totes. Failure to do so will result in an automatic billing of SGD200 (Before tax) per ecoTOTE not returned.\n
-    Thank you so much for your time on this matter and let us know if you have any questions.
-
-    Thanks and best regards.
-
-    Proof Team.
-"""
 
 def message_2(table_rows):
     return f"""
@@ -169,20 +144,6 @@ def message_2(table_rows):
     </html>    
 """
 
-message_2_text = """
-    Hello Team,\n
-    We hope your day has been going great so far!\n
-    We would like to follow up on the outstanding ecoTOTE(S) at your venue as per our previous email:\n
-
-    ~ *Table Content goes here* ~
- 
-    Do take note that should we not receive any confirmation about the status of the mentioned totes within the next two weeks, we will deem these totes "Missing" and move forward with charging the value of these totes to your account. As stated in the previous email, each ecoTote is valued at SGD200 (Before Tax).\n
-    Once again, we greatly appreciate the time taken to ensure that the ecoTOTES are properly maintained so that these valuable assets can continue serving their purpose in our sustainability movement.\n
-
-    Kind regards,
-
-    Proof Team
-"""
 
 def app_instructions():
     return f"""

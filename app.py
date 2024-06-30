@@ -1,10 +1,18 @@
+from tempfile import NamedTemporaryFile
+
 import streamlit as st
 import pandas as pd
 from streamlit_option_menu import option_menu
-from messages import app_instructions, message_body, message_2, message_body_text, message_2_text
-from data import mass_mail
+from messages import app_instructions, message_body, message_2
+from automation import mass_mail
+from util import init_state_var, get_recepients, load_data, filter_unaccounted_branches, load_preview
 
 st.set_page_config(page_title="EcoTotes Chaser")   
+
+SHEET_NAMES = ["Mastersheet", "Branch with Emails", "Recording"]
+STATE_VARS = ["unsucessful_email","tracker_filepath"]
+
+init_state_var(STATE_VARS)
 
 st.title("Proof and Company's automated ecoTotes Chaser")
 
@@ -15,61 +23,83 @@ if selected == "Home":
 
 elif selected == "Send Emails":
 
-    file = st.file_uploader("Upload your Excel file here", type="xlsx")
+    # Define Page Structure
+    
+    file_upload_placeholder = st.empty()
+    email_config_placeholder = st.empty()
+    completion_text_placeholder = st.empty()
+    download_btn_placeholder = st.empty()
+    unsuccesful_email_summary = st.empty()  
+    
+    # Takes the users uploaded excel file
+    file = file_upload_placeholder.file_uploader("Upload your Excel file here", type="xlsx")
     
     if file is not None:
-        sheet_names = ["Mastersheet", "Branch with Emails", "Recording"]
-        master_df, email_df, recording_df = [pd.read_excel(file, sheet_name = sheet) for sheet in sheet_names]
+        # Read the excel sheets into individual dataframes
+        master_df, email_df, recording_df = load_data(file, SHEET_NAMES)
         
-        unaccounted_branches = master_df[master_df["Accounted"].isna()]
-        branch_names_mastersheet = unaccounted_branches["Branch"].unique()
-
-        email_type = st.selectbox("Email Type", options=["1st Email Chaser", "2nd Email Chaser"], placeholder="Choose your email type")
+        # Filter the unaccounted branches for sending 
+        unaccounted_branches, unaccounted_branches_df = filter_unaccounted_branches(master_df)
         
-        if email_type == "1st Email Chaser":
-            with st.expander(label="See content"):
-                st.write(message_body_text, unsafe_allow_html=True)
-        elif email_type == "2nd Email Chaser":
-            with st.expander(label="See content"):
-                st.write(message_2_text, unsafe_allow_html=True)
+        with email_config_placeholder.container(border=True):
         
-        with st.form("Credentials", clear_on_submit=True):
-            st.write("Recorded by:")
-            col1, col2 = st.columns(2)
-            first_name = col1.text_input("First name", placeholder="John")
-            last_name = col2.text_input("Last name", placeholder="Doe")  
-            submit_btn = st.form_submit_button("Send Mails")
-
-        if submit_btn:
-            recorded_by = f"{first_name} {last_name}"
-            sending_prog = st.progress(value=0, text="Sending...")
-            params=[master_df, email_df, recording_df, email_type, branch_names_mastersheet, recorded_by, sending_prog] 
+            #User specified email template
+            email_type = st.selectbox("Email Type", options=["1st Email Chaser", "2nd Email Chaser"], placeholder="Choose your email type")
+            load_preview(email_type)
             
-            if email_type == "1st Email Chaser":
-                params.insert(5, message_body)
-            elif email_type == "2nd Email Chaser":
-                params.insert(5, message_2)
-            
-            unsuccessful_emails = mass_mail(*params)
-            sending_prog.empty()
-            
-            with pd.ExcelWriter("updated.xlsx", engine="xlsxwriter", date_format="DD-MM") as writer:
-                master_df.to_excel(writer, sheet_name="Mastersheet", index=False,)
-                email_df.to_excel(writer, sheet_name="Branch with Emails", index=False)
-                recording_df.to_excel(writer, sheet_name="Recording", startrow=0, index=False)
+            # Create a form to take user user details for updating tracking sheet
+            with st.form("Credentials", clear_on_submit=True, border=False):
+                st.write("Recorded by:")
+                col1, col2 = st.columns(2)
+                first_name = col1.text_input("First name", placeholder="John")
+                last_name = col2.text_input("Last name", placeholder="Doe")  
+                submit = st.form_submit_button("Send Mails")
 
-            old_file_name = file.name
-            new_file_name = old_file_name.split(".")[0]
-
-            with open("updated.xlsx", "rb") as updated_file:
-                completion_text = st.empty()
-                st.download_button(label="Download updated excel sheet", data=updated_file, file_name=f"{new_file_name}_updated.xlsx", mime="application/vnd.ms-excel")
-                unsuccesful = st.empty()
+            if submit:
+                recorded_by = f"{first_name} {last_name}"
+                sending_prog = st.progress(value=0, text="Sending...")
                 
-            if unsuccessful_emails:
-                completion_text.info("Some emails were not sent successfully. This could be due to invalid email addresses or server connection issues. Download the updated excel sheet for more info!")
-                with unsuccesful.container(height=200):
-                    for unsuccessful_email in unsuccessful_emails:   
-                        st.error(unsuccessful_email)
-            else:
-                completion_text.success("All emails sent successfully. Download the updated excel sheet for more info!")
+                mass_mail_kwargs = {
+                    "filtered_df": unaccounted_branches_df,
+                    "email_df": email_df,
+                    "recording_df": recording_df, 
+                    "email_type": email_type,
+                    "unaccounted_branches": unaccounted_branches,
+                    "message": message_body if email_type == "1st Email Chaser" else message_2,
+                    "recorded_by": recorded_by,
+                    "sending_prog": sending_prog
+                }
+                
+                unsuccessful_emails = mass_mail(**mass_mail_kwargs)
+                st.session_state["unsucessful_email"]  = unsuccessful_emails
+                sending_prog.empty()
+
+                # Create temporary file to hold updated xlsx file
+                tmpfile = NamedTemporaryFile(delete=False)
+                
+                with pd.ExcelWriter(tmpfile.name, engine="xlsxwriter", date_format="DD-MM") as writer:
+                    master_df.to_excel(writer, sheet_name="Mastersheet", index=False,)
+                    email_df.to_excel(writer, sheet_name="Branch with Emails", index=False)
+                    recording_df.to_excel(writer, sheet_name="Recording", startrow=0, index=False)
+                    st.session_state["tracker_filepath"] = tmpfile.name
+                
+                
+                if st.session_state["tracker_filepath"] is not None:
+                    with open(st.session_state["tracker_filepath"], "rb") as updated_file:
+                        file_name = file.name.split(".")[0]
+                        st.download_button(label="Download updated excel sheet", data=updated_file, file_name=f"{file_name}_updated.xlsx", mime="application/vnd.ms-excel")
+                   
+                    
+                if st.session_state["unsucessful_email"] is not None:
+                    unsuccessful_emails = st.session_state["unsucessful_email"]
+                    if unsuccessful_emails:
+                        completion_text_placeholder.info("Some emails were not sent successfully. This could be due to invalid email addresses or server connection issues. Download the updated excel sheet for more info!")
+                                    
+                        # Display summary of unsuccessful emails
+                        with unsuccesful_email_summary.container(height=200):
+                            for unsuccessful_email in st.session_state["unsucessful_email"]:   
+                                st.error(unsuccessful_email)
+                                
+                    else:
+                        completion_text_placeholder.success("All emails sent successfully. Download the updated excel sheet for more info!")    
+               
