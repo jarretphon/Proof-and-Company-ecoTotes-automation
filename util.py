@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from numpy import rec
+from func_timeout import FunctionTimedOut
 import streamlit as st
 from PIL import Image
 import pandas as pd
@@ -34,7 +34,7 @@ def get_recepients(branch, email_df):
     
     # Drop missing emails and return list of recipient emails
     receipients = branch_df.filter(like="email").dropna(axis=1).values.flatten()
-    return receipients if receipients.size > 0 else None
+    return list(receipients) if receipients.size > 0 else None
 
 
 # update excel sheet with timestamp of when email was sent
@@ -51,6 +51,13 @@ def record_data(branch, email_type, df, recorded_by):
     df.at[row_index, df.columns[column_index]] = str(recorded_by)
 
 
+# append failed branch and information to combined logs
+def handle_exception(branch, exception, logs):
+    
+    new_log = (branch, exception)
+    logs.append(new_log)
+
+    
 @st.cache_data()
 def load_data(xlsx_file, sheet_names):
     

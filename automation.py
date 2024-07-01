@@ -12,7 +12,7 @@ from dotenv import load_dotenv
 from func_timeout import func_set_timeout, FunctionTimedOut
 
 from messages import message_body
-from util import get_table_content, get_recepients, record_data
+from util import get_table_content, get_recepients, record_data, handle_exception
 
 PORT = 587
 EMAIL_SERVER = "smtp-mail.outlook.com"
@@ -75,6 +75,7 @@ def mass_mail(filtered_df, email_df, recording_df, email_type, unaccounted_branc
     global num_retry
     
     branches_email_success = []
+    failed_logs=[]
     
     # Iterate through the list of unaccounted branches to get their essential information for populating the HTML email template
     for branch in unaccounted_branches:
@@ -104,26 +105,31 @@ def mass_mail(filtered_df, email_df, recording_df, email_type, unaccounted_branc
      
         except smtplib.SMTPException as e:
             print(e)
+            handle_exception(branch, e, failed_logs)
             continue
         
         except Exception as e:
             print(e)
+            handle_exception(branch, e, failed_logs)
             continue
         
-        except FunctionTimedOut:
+        except FunctionTimedOut as e:
             print(f"Timed out for {branch}")
+            handle_exception(branch, f"Timed out for {branch}", failed_logs)
             continue
     
     unsuccessful_emails = list(set(unaccounted_branches) - set(branches_email_success))
     print(f"Unsuccessful: {unsuccessful_emails}")
     
     if num_retry >= 4:
-        return unsuccessful_emails
+        return failed_logs
     
     if len(unsuccessful_emails) > 0:
         num_retry += 1
         return mass_mail(filtered_df, email_df, recording_df, email_type, unsuccessful_emails, message, recorded_by, sending_prog) 
 
+    
+  
          
 if __name__ == "__main__":
     send_email(

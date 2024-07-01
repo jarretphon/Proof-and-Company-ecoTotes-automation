@@ -41,6 +41,10 @@ elif selected == "Send Emails":
         # Filter the unaccounted branches for sending 
         unaccounted_branches, unaccounted_branches_df = filter_unaccounted_branches(master_df)
         
+        for branch in unaccounted_branches:
+            x = get_recepients(branch, email_df)
+            print(x)
+        
         with email_config_placeholder.container(border=True):
         
             #User specified email template
@@ -67,11 +71,12 @@ elif selected == "Send Emails":
                     "unaccounted_branches": unaccounted_branches,
                     "message": message_body if email_type == "1st Email Chaser" else message_2,
                     "recorded_by": recorded_by,
-                    "sending_prog": sending_prog
+                    "sending_prog": sending_prog,
                 }
                 
-                unsuccessful_emails = mass_mail(**mass_mail_kwargs)
-                st.session_state["unsucessful_email"]  = unsuccessful_emails
+                failed_logs = mass_mail(**mass_mail_kwargs)
+                print(failed_logs)
+                st.session_state["unsucessful_email"]  = failed_logs
                 sending_prog.empty()
 
                 # Create temporary file to hold updated xlsx file
@@ -84,22 +89,23 @@ elif selected == "Send Emails":
                     st.session_state["tracker_filepath"] = tmpfile.name
                 
                 
-                if st.session_state["tracker_filepath"] is not None:
-                    with open(st.session_state["tracker_filepath"], "rb") as updated_file:
-                        file_name = file.name.split(".")[0]
-                        st.download_button(label="Download updated excel sheet", data=updated_file, file_name=f"{file_name}_updated.xlsx", mime="application/vnd.ms-excel")
-                   
-                    
-                if st.session_state["unsucessful_email"] is not None:
-                    unsuccessful_emails = st.session_state["unsucessful_email"]
-                    if unsuccessful_emails:
-                        completion_text_placeholder.info("Some emails were not sent successfully. This could be due to invalid email addresses or server connection issues. Download the updated excel sheet for more info!")
-                                    
-                        # Display summary of unsuccessful emails
-                        with unsuccesful_email_summary.container(height=200):
-                            for unsuccessful_email in st.session_state["unsucessful_email"]:   
-                                st.error(unsuccessful_email)
-                                
-                    else:
-                        completion_text_placeholder.success("All emails sent successfully. Download the updated excel sheet for more info!")    
+    if st.session_state["tracker_filepath"] is not None:
+        with open(st.session_state["tracker_filepath"], "rb") as updated_file:
+            file_name = "updated_file"#file.name.split(".")[0]
+            st.download_button(label="Download updated excel sheet", data=updated_file, file_name=f"{file_name}.xlsx", mime="application/vnd.ms-excel")
+        
+        
+    if st.session_state["unsucessful_email"] is not None:
+        unsuccessful_emails = st.session_state["unsucessful_email"]
+        print(unsuccessful_emails)
+        if unsuccessful_emails:
+            completion_text_placeholder.info("Some emails were not sent successfully. This could be due to invalid email addresses or server connection issues. Download the updated excel sheet for more info!")
+                        
+            # Display summary of unsuccessful emails
+            with unsuccesful_email_summary.container(height=200):
+                for branch, exception in unsuccessful_emails:   
+                    st.error(f"{branch} ({exception})")
+                        
+        else:
+            completion_text_placeholder.success("All emails sent successfully. Download the updated excel sheet for more info!")    
                
