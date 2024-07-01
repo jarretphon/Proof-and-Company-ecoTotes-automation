@@ -41,10 +41,6 @@ elif selected == "Send Emails":
         # Filter the unaccounted branches for sending 
         unaccounted_branches, unaccounted_branches_df = filter_unaccounted_branches(master_df)
         
-        for branch in unaccounted_branches:
-            x = get_recepients(branch, email_df)
-            print(x)
-        
         with email_config_placeholder.container(border=True):
         
             #User specified email template

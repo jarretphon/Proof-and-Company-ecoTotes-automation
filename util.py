@@ -4,6 +4,7 @@ from func_timeout import FunctionTimedOut
 import streamlit as st
 from PIL import Image
 import pandas as pd
+import html
 
 
 def init_state_var(vars):
@@ -96,7 +97,6 @@ def load_preview(email_type):
         st.info("Actual table contents will be generated dynamically from the uploaded file.")
         
         if email_type == "1st Email Chaser":
-            
             # Email Contents of 1st email chaser template
             
             st.write(f"""
