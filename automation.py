@@ -127,7 +127,8 @@ def mass_mail(filtered_df, email_df, recording_df, email_type, unaccounted_branc
     if len(unsuccessful_emails) > 0:
         num_retry += 1
         return mass_mail(filtered_df, email_df, recording_df, email_type, unsuccessful_emails, message, recorded_by, sending_prog) 
-
+    else:
+        return unsuccessful_emails
     
   
          
