@@ -3,7 +3,7 @@ from tempfile import NamedTemporaryFile
 import streamlit as st
 import pandas as pd
 from streamlit_option_menu import option_menu
-from messages import app_instructions, message_body, message_2
+from messages import app_instructions, message_3, message_body, message_2
 from automation import mass_mail
 from util import init_state_var, get_recepients, load_data, filter_unaccounted_branches, load_preview
 
@@ -44,7 +44,7 @@ elif selected == "Send Emails":
         with email_config_placeholder.container(border=True):
         
             #User specified email template
-            email_type = st.selectbox("Email Type", options=["1st Email Chaser", "2nd Email Chaser"], placeholder="Choose your email type")
+            email_type = st.selectbox("Email Type", options=["1st Email Chaser", "2nd Email Chaser", "Reminder"], placeholder="Choose your email type")
             load_preview(email_type)
             
             # Create a form to take user user details for updating tracking sheet
@@ -65,7 +65,7 @@ elif selected == "Send Emails":
                     "recording_df": recording_df, 
                     "email_type": email_type,
                     "unaccounted_branches": unaccounted_branches,
-                    "message": message_body if email_type == "1st Email Chaser" else message_2,
+                    "message": message_body if email_type == "1st Email Chaser" else message_2 if email_type == "2nd Email Chaser" else message_3,
                     "recorded_by": recorded_by,
                     "sending_prog": sending_prog,
                 }

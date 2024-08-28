@@ -145,6 +145,59 @@ def message_2(table_rows):
 """
 
 
+def message_3(table_rows):
+    return f"""
+        <html> 
+            <head>
+                {style}
+            </head>
+            <body style="color: black;">
+                <p>Dear Team,</p>
+                <p>
+                    We are writing to remind you that several ecoTOTES have been at your venue for over 3 months. To maintain a smooth operation of our sustainable distribution program, it's crucial to return empty ecoTOTES promptly.
+                </p>     
+                <strong>Please review the following list of ecoTOTES and confirm their status:</strong>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Branch</th>
+                            <th>Description</th>
+                            <th>Serial Number</th>
+                            <th>Qty</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {table_rows}
+                    </tbody>
+                </table>
+                
+                <strong>Please indicate whether these ecoTOTES are:</strong>
+                <ul>
+                    <li><strong>Still in use</strong></li>
+                    <li><strong>Empty and ready for collection</strong></li>
+                    <li><strong>Lost</strong></li>
+                </ul>
+                
+                <p>
+                    <strong>If you have any empty ecoTOTES ready for pickup, please contact us immediately.</strong> We will arrange for collection as soon as possible.
+                </p>
+                <p>
+                   Please note that the ecoTOTES on circulation are solely owned by Proof & Company and the company reserves the rights to charge our customers for missing ecoTOTES at SGD 200 each excluding the prevailing GST.
+                </p>
+                <p>
+                    Thank you for your immediate attention to this matter.
+                </p>
+                <p>
+                    Kind regards,
+                </p>
+                <p>
+                    Proof Team
+                </p>
+            </body>
+        </html>    
+    """
+
+
 def app_instructions():
     return f"""
         *Empower your communication effortlessly with automation. This intuitive platform streamlines the process of sending email reminders, ensuring a seamless experience for tracking.*

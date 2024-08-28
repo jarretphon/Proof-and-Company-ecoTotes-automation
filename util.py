@@ -169,7 +169,7 @@ def load_preview(email_type):
             """, unsafe_allow_html=True)          
             
                         
-        else:
+        elif email_type == "2nd Email Chaser":
             
             # Email Contents of 2nd email chaser template
             
@@ -196,4 +196,39 @@ def load_preview(email_type):
                 <p>
                     Proof Team
                 </p>
+            """, unsafe_allow_html=True)
+
+        else:
+            st.write("""
+                    <p>Dear Team,</p>
+                    <p>
+                        We are writing to remind you that several ecoTOTES have been at your venue for over 3 months. To maintain a smooth operation of our sustainable distribution program, it's crucial to return empty ecoTOTES promptly.
+                    </p>     
+                    <strong>Please review the following list of ecoTOTES and confirm their status:</strong>
+            """, unsafe_allow_html=True)
+            
+            st.dataframe(table, use_container_width=True)
+             
+            st.write("""       
+                    <strong>Please indicate whether these ecoTOTES are:</strong>
+                    <ul>
+                        <li><strong>Still in use</strong></li>
+                        <li><strong>Empty and ready for collection</strong></li>
+                        <li><strong>Lost</strong></li>
+                    </ul>
+                    <p>
+                        <strong>If you have any empty ecoTOTES ready for pickup, please contact us immediately.</strong> We will arrange for collection as soon as possible.
+                    </p>
+                    <p>
+                    Please note that the ecoTOTES on circulation are solely owned by Proof & Company and the company reserves the rights to charge our customers for missing ecoTOTES at SGD 200 each excluding the prevailing GST.
+                    </p>
+                    <p>
+                        Thank you for your immediate attention to this matter.
+                    </p>
+                    <p>
+                        Kind regards,
+                    </p>
+                    <p>
+                        Proof Team
+                    </p>
             """, unsafe_allow_html=True)
