@@ -27,7 +27,7 @@ load_dotenv(envdir)
 
 # get the environment variables
 sender_email = st.secrets["email"] #os.getenv("email") 
-password = st.secrets["password"] #os.getenv("password") 
+password = st.secrets["password"]  #os.getenv("password") 
 
 
 @func_set_timeout(5) # Send_email function will time out after 5 seconds to optimise sending process
@@ -129,7 +129,7 @@ def mass_mail(filtered_df, email_df, recording_df, email_type, unaccounted_branc
         num_retry += 1
         return mass_mail(filtered_df, email_df, recording_df, email_type, unsuccessful_emails, message, recorded_by, sending_prog) 
     else:
-        return unsuccessful_emails
+        return []
     
   
          
