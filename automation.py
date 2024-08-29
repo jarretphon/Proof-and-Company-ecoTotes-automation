@@ -10,6 +10,7 @@ from email.utils import formataddr
 from pathlib import Path
 from dotenv import load_dotenv
 from func_timeout import func_set_timeout, FunctionTimedOut
+import streamlit as st
 
 from messages import message_body
 from util import get_table_content, get_recepients, record_data, handle_exception
@@ -25,8 +26,8 @@ file_name = "ecoTotes_QR.png"
 load_dotenv(envdir)
 
 # get the environment variables
-sender_email = os.getenv("email") #st.secrets["email"]
-password = os.getenv("password") #st.secrets["password"]
+sender_email = st.secrets["email"] #os.getenv("email") 
+password = st.secrets["password"] #os.getenv("password") 
 
 
 @func_set_timeout(5) # Send_email function will time out after 5 seconds to optimise sending process
