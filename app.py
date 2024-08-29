@@ -99,8 +99,8 @@ elif selected == "Send Emails":
                         
             # Display summary of unsuccessful emails
             with unsuccesful_email_summary.container(height=200):
-                for branch, exception in unsuccessful_emails:   
-                    st.error(f"{branch} ({exception})")
+                for branch in unsuccessful_emails:   
+                    st.error(f"{branch})")
                         
         else:
             completion_text_placeholder.success("All emails sent successfully. Download the updated excel sheet for more info!")    
