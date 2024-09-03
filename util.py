@@ -211,6 +211,7 @@ def load_preview(email_type):
              
             st.write("""       
                     <strong>Please indicate whether these ecoTOTES are:</strong>
+                    <br>
                     <ul>
                         <li><strong>Still in use</strong></li>
                         <li><strong>Empty and ready for collection</strong></li>
