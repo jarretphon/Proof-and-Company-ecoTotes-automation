@@ -204,13 +204,13 @@ def load_preview(email_type):
                     <p>
                         We are writing to remind you that several ecoTOTES have been at your venue for over 3 months. To maintain a smooth operation of our sustainable distribution program, it's crucial to return empty ecoTOTES promptly.
                     </p>     
-                    <strong>Please review the following list of ecoTOTES and confirm their status:</strong>
+                    <p><strong>Please review the following list of ecoTOTES and confirm their status:</strong></p>
             """, unsafe_allow_html=True)
             
             st.dataframe(table, use_container_width=True)
              
             st.write("""       
-                    <strong>Please indicate whether these ecoTOTES are:</strong>
+                    <p><strong>Please indicate whether these ecoTOTES are:</strong></p>
                     <br>
                     <ul>
                         <li><strong>Still in use</strong></li>

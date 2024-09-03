@@ -156,8 +156,8 @@ def message_3(table_rows):
                 <p>
                     We are writing to remind you that several ecoTOTES have been at your venue for over 3 months. To maintain a smooth operation of our sustainable distribution program, it's crucial to return empty ecoTOTES promptly.
                 </p>     
-                <strong>Please review the following list of ecoTOTES and confirm their status:</strong>
-                <br>
+                <p><strong>Please review the following list of ecoTOTES and confirm their status:</strong></p>
+                
                 <table>
                     <thead>
                         <tr>
@@ -172,7 +172,7 @@ def message_3(table_rows):
                     </tbody>
                 </table>
                 
-                <strong>Please indicate whether these ecoTOTES are:</strong>
+                <p><strong>Please indicate whether these ecoTOTES are:</strong></p>
                 <ul>
                     <li><strong>Still in use</strong></li>
                     <li><strong>Empty and ready for collection</strong></li>
