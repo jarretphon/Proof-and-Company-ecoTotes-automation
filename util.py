@@ -22,7 +22,7 @@ def get_table_content(df):
                 <td>{info.Branch}</td>
                 <td>{info.Description}</td>
                 <td>{info.SerialNumber}</td>
-                <td>{info.Qty}</td>
+                <td>{info.Quantity}</td>
             </tr>
         """
         table_rows += table_row 

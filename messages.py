@@ -210,7 +210,7 @@ def app_instructions():
         - Ensure all sheets and columns are accurately named and included for seamless operation.
 
         #### 2. **Mastersheet Requirements:**
-        - Confirm the presence and accuracy of essential columns: Branch, Description, Qty, SerialNumber and Accounted.
+        - Confirm the presence and accuracy of essential columns: Branch, Description, Quantity, SerialNumber and Accounted.
         - Any discrepancies may affect the application's functionality.
 
         #### 3. **Select Email Type:**
